@@ -241,7 +241,7 @@ class MiddleHelpers extends ChangeNotifier {
                                   Text(
                                     snapshot.data[index].data()['name'],
                                     style: TextStyle(
-                                      fontSize: 23.0,
+                                      fontSize: 25.0,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.black,
                                     ),
