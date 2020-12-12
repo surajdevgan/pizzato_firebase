@@ -241,7 +241,7 @@ class MiddleHelpers extends ChangeNotifier {
                                   Text(
                                     snapshot.data[index].data()['name'],
                                     style: TextStyle(
-                                      fontSize: 24.0,
+                                      fontSize: 20.0,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.black,
                                     ),
@@ -287,7 +287,7 @@ class MiddleHelpers extends ChangeNotifier {
                               ),
                             ),
                             SizedBox(
-                              height: 200.0,
+                              height: 180.0,
                               child: Image.network(
                                   snapshot.data[index].data()['image']),
                             )
