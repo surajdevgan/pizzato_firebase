@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:pizzato_firebase/helpers/footer.dart';
 import 'package:pizzato_firebase/helpers/headers.dart';
 import 'package:pizzato_firebase/helpers/middle.dart';
+import 'package:pizzato_firebase/services/maps.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -9,6 +11,12 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    Provider.of<GenerateMaps>(context, listen: false).getCurrentLocation();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
