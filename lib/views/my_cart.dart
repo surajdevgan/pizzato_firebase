@@ -102,7 +102,7 @@ class _MyCartState extends State<MyCart> {
                 height: 200.0,
                 width: 400.0,
                 child: Row(
-                  children: [],
+                  ,
                 ),
               );
             }).toList());
