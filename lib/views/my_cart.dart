@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:lottie/lottie.dart';
 import 'package:page_transition/page_transition.dart';
 
 import 'home_page.dart';
@@ -84,7 +86,29 @@ class _MyCartState extends State<MyCart> {
 
   Widget cartData() {
     return SizedBox(
-      height: 300.0,
+      height: MediaQuery.of(context).size.height,
+      child: StreamBuilder<QuerySnapshot>(
+        stream: FirebaseFirestore.instance.collection('myOrders').snapshots(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: Lottie.asset('animation/delivery.json'),
+            );
+          } else {
+            return ListView(
+                children:
+                    snapshot.data.docs.map((DocumentSnapshot documentSnapshot) {
+              return Container(
+                height: 200.0,
+                width: 400.0,
+                child: Row(
+                  children: [],
+                ),
+              );
+            }).toList());
+          }
+        },
+      ),
     );
   }
 

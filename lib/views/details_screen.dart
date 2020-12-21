@@ -3,8 +3,10 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:pizzato_firebase/Providers/calculations.dart';
 import 'package:pizzato_firebase/views/home_page.dart';
 import 'package:pizzato_firebase/views/my_cart.dart';
+import 'package:provider/provider.dart';
 
 class DetailedScreen extends StatefulWidget {
   final QueryDocumentSnapshot queryDocumentSnapshot;
@@ -59,7 +61,10 @@ class _DetailedScreenState extends State<DetailedScreen> {
             padding: const EdgeInsets.only(left: 250.0),
             child: IconButton(
               icon: Icon(FontAwesomeIcons.trash, color: Colors.red),
-              onPressed: () {},
+              onPressed: () {
+                Provider.of<Calculations>(context, listen: false)
+                    .removeAllData();
+              },
             ),
           )
         ],
@@ -184,10 +189,16 @@ class _DetailedScreenState extends State<DetailedScreen> {
                           children: [
                             IconButton(
                               icon: Icon(EvaIcons.minus),
-                              onPressed: () {},
+                              onPressed: () {
+                                Provider.of<Calculations>(context,
+                                        listen: false)
+                                    .minusCheese();
+                              },
                             ),
                             Text(
-                              '$cheeseValue',
+                              Provider.of<Calculations>(context, listen: true)
+                                  .getCheeseValue
+                                  .toString(),
                               style: TextStyle(
                                 fontSize: 20.0,
                                 color: Colors.grey.shade500,
@@ -195,7 +206,11 @@ class _DetailedScreenState extends State<DetailedScreen> {
                             ),
                             IconButton(
                               icon: Icon(EvaIcons.plus),
-                              onPressed: () {},
+                              onPressed: () {
+                                Provider.of<Calculations>(context,
+                                        listen: false)
+                                    .addCheese();
+                              },
                             ),
                           ],
                         )
@@ -215,10 +230,16 @@ class _DetailedScreenState extends State<DetailedScreen> {
                           children: [
                             IconButton(
                               icon: Icon(EvaIcons.minus),
-                              onPressed: () {},
+                              onPressed: () {
+                                Provider.of<Calculations>(context,
+                                        listen: false)
+                                    .minusBeacon();
+                              },
                             ),
                             Text(
-                              '$beaconValue',
+                              Provider.of<Calculations>(context, listen: true)
+                                  .getBeaconValue
+                                  .toString(),
                               style: TextStyle(
                                 fontSize: 20.0,
                                 color: Colors.grey.shade500,
@@ -226,7 +247,11 @@ class _DetailedScreenState extends State<DetailedScreen> {
                             ),
                             IconButton(
                               icon: Icon(EvaIcons.plus),
-                              onPressed: () {},
+                              onPressed: () {
+                                Provider.of<Calculations>(context,
+                                        listen: false)
+                                    .addBeacon();
+                              },
                             ),
                           ],
                         )
@@ -246,10 +271,16 @@ class _DetailedScreenState extends State<DetailedScreen> {
                           children: [
                             IconButton(
                               icon: Icon(EvaIcons.minus),
-                              onPressed: () {},
+                              onPressed: () {
+                                Provider.of<Calculations>(context,
+                                        listen: false)
+                                    .minusOnion();
+                              },
                             ),
                             Text(
-                              '$onionValue',
+                              Provider.of<Calculations>(context, listen: true)
+                                  .getOnionValue
+                                  .toString(),
                               style: TextStyle(
                                 fontSize: 20.0,
                                 color: Colors.grey.shade500,
@@ -257,7 +288,11 @@ class _DetailedScreenState extends State<DetailedScreen> {
                             ),
                             IconButton(
                               icon: Icon(EvaIcons.plus),
-                              onPressed: () {},
+                              onPressed: () {
+                                Provider.of<Calculations>(context,
+                                        listen: false)
+                                    .addOnion();
+                              },
                             ),
                           ],
                         )
@@ -272,9 +307,16 @@ class _DetailedScreenState extends State<DetailedScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               GestureDetector(
+                onTap: () {
+                  Provider.of<Calculations>(context, listen: false)
+                      .selectSmallSize();
+                },
                 child: Container(
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Provider.of<Calculations>(context, listen: true)
+                            .smallTapped
+                        ? Colors.red
+                        : Colors.white,
                     border: Border.all(color: Colors.red),
                     borderRadius: BorderRadius.circular(10.0),
                   ),
@@ -290,9 +332,16 @@ class _DetailedScreenState extends State<DetailedScreen> {
                 ),
               ),
               GestureDetector(
+                onTap: () {
+                  Provider.of<Calculations>(context, listen: false)
+                      .selectMediumSize();
+                },
                 child: Container(
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Provider.of<Calculations>(context, listen: true)
+                            .mediumTapped
+                        ? Colors.red
+                        : Colors.white,
                     border: Border.all(color: Colors.red),
                     borderRadius: BorderRadius.circular(10.0),
                   ),
@@ -308,9 +357,16 @@ class _DetailedScreenState extends State<DetailedScreen> {
                 ),
               ),
               GestureDetector(
+                onTap: () {
+                  Provider.of<Calculations>(context, listen: false)
+                      .selectLargeSize();
+                },
                 child: Container(
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Provider.of<Calculations>(context, listen: true)
+                            .largeTapped
+                        ? Colors.red
+                        : Colors.white,
                     border: Border.all(color: Colors.red),
                     borderRadius: BorderRadius.circular(10.0),
                   ),
@@ -339,6 +395,22 @@ class _DetailedScreenState extends State<DetailedScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           GestureDetector(
+            onTap: () {
+              Provider.of<Calculations>(context, listen: false)
+                  .addToCart(context, {
+                'image': widget.queryDocumentSnapshot['image'],
+                'name': widget.queryDocumentSnapshot['name'],
+                'price': widget.queryDocumentSnapshot['price'],
+                'onion': Provider.of<Calculations>(context, listen: false)
+                    .getOnionValue,
+                'beacon': Provider.of<Calculations>(context, listen: false)
+                    .getBeaconValue,
+                'cheese': Provider.of<Calculations>(context, listen: false)
+                    .getCheeseValue,
+                'size':
+                    Provider.of<Calculations>(context, listen: false).getSize,
+              });
+            },
             child: Container(
               width: 200.0,
               height: 50.0,
