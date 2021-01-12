@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:pizzato_firebase/services/maps.dart';
+import 'package:pizzato_firebase/services/manageMaps.dart';
 
 class Headers extends ChangeNotifier {
   Widget appBar(BuildContext context) {

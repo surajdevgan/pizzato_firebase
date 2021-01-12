@@ -86,7 +86,7 @@ class _MyCartState extends State<MyCart> {
 
   Widget cartData() {
     return SizedBox(
-      height: MediaQuery.of(context).size.height,
+      height: 300.0,
       child: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance.collection('myOrders').snapshots(),
         builder: (context, snapshot) {
@@ -98,11 +98,79 @@ class _MyCartState extends State<MyCart> {
             return ListView(
                 children:
                     snapshot.data.docs.map((DocumentSnapshot documentSnapshot) {
-              return Container(
-                height: 200.0,
-                width: 400.0,
-                child: Row(
-                  ,
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(25.0),
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.shade500,
+                          blurRadius: 5,
+                          spreadRadius: 3,
+                        )
+                      ]),
+                  height: 200.0,
+                  width: 400.0,
+                  child: Row(
+                    children: [
+                      SizedBox(
+                          child: Image.network(
+                        documentSnapshot.data()['image'],
+                      )),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            documentSnapshot.data()['name'],
+                            style: TextStyle(
+                              color: Colors.black87,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 24.0,
+                            ),
+                          ),
+                          Text(
+                            'Price : ${documentSnapshot.data()['price'].toString()}',
+                            style: TextStyle(
+                              color: Colors.black87,
+                              fontSize: 21.0,
+                            ),
+                          ),
+                          Text(
+                            'Onion : ${documentSnapshot.data()['onion'].toString()}',
+                            style: TextStyle(
+                              color: Colors.black87,
+                              fontSize: 18.0,
+                            ),
+                          ),
+                          Text(
+                            'Beacon : ${documentSnapshot.data()['beacon'].toString()}',
+                            style: TextStyle(
+                              color: Colors.black87,
+                              fontSize: 18.0,
+                            ),
+                          ),
+                          Text(
+                            'Cheese : ${documentSnapshot.data()['cheese'].toString()}',
+                            style: TextStyle(
+                              color: Colors.black87,
+                              fontSize: 18.0,
+                            ),
+                          ),
+                          CircleAvatar(
+                            child: Text(
+                              documentSnapshot.data()['size'],
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
+                            ),
+                          )
+                        ],
+                      )
+                    ],
+                  ),
                 ),
               );
             }).toList());

@@ -6,7 +6,7 @@ import 'package:pizzato_firebase/helpers/footer.dart';
 import 'package:pizzato_firebase/helpers/headers.dart';
 import 'package:pizzato_firebase/helpers/middle.dart';
 import 'package:pizzato_firebase/services/manageData.dart';
-import 'package:pizzato_firebase/services/maps.dart';
+import 'package:pizzato_firebase/services/manageMaps.dart';
 import 'package:pizzato_firebase/views/splash_screen.dart';
 import 'package:provider/provider.dart';
 
